@@ -1,14 +1,23 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Filter = ({ title, bg_color, text_color }) => {
+// Filter component to display filter badges
+const Filter = ({ title, bgColor, textColor }) => {
   return (
     <div
-      className={`  rounded-full px-2 py-1  whitespace-nowrap `}
-      style={{ backgroundColor: bg_color, color: text_color }}
+      className="rounded-full px-2 py-1 whitespace-nowrap"
+      style={{ backgroundColor: bgColor, color: textColor }}
     >
       <p className="text-xs">{title}</p>
     </div>
   );
+};
+
+// PropTypes for type checking
+Filter.propTypes = {
+  title: PropTypes.string.isRequired,
+  bgColor: PropTypes.string.isRequired,
+  textColor: PropTypes.string.isRequired,
 };
 
 export default Filter;

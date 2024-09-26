@@ -1,76 +1,75 @@
 import React from "react";
-import {
-  MailOutlined,
-  CalendarOutlined,
-  FlagOutlined,
-  EyeOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import PropTypes from "prop-types";
+import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-import SoundIcon from "../assets/audio.png";
-import messageIcon from "../assets/messageIcon.png";
-import messageIconWithNotification from "../assets/textnotification.png";
-import profile from "../assets/profile.png";
-import calenderIcon from "../assets/calenderIcon.png";
-import redFlagIcon from "../assets/redFlagIcon.png";
-import inProgressIcon from "../assets/in_progress.png";
-import todoIcon from "../assets/todo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeDown } from "@fortawesome/free-solid-svg-icons";
-import { Badge } from "antd";
-
+// TodoCard component to display individual task details
 const TodoCard = ({ title, status, statusBgColor, statusColor }) => {
+  // Function to get the appropriate status icon based on the task status
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "In-Progress":
+        return "/images/in_progress.png";
+      case "To Do":
+      case "Ready for QA":
+        return "/images/todo.png";
+      default:
+        return null;
+    }
+  };
+
   return (
     <div
-      className="box box-shadow border border-gray-300  rounded-md px-2 py-1 mb-2 md:mb-4"
+      className="box box-shadow border border-gray-300 rounded-md px-2 py-1 mb-2 md:mb-4"
       style={{
         boxShadow:
           "0 4px 6px rgba(0, 0, 0, 0.1), 0 5px 30px rgba(0, 0, 0, 0.1)",
       }}
     >
+      {/* Checkbox and task ID */}
       <div className="flex flex-row justify-start items-center gap-1">
         <input
           type="checkbox"
           id="select-checkbox"
-          className="bg-[#4bb7a0] custom-checkbox"
+          className="custom-checkbox"
         />
-        <label for="select-checkbox" class="text-xs">
-          <span clasName="text-grey-300">#Nay139</span>
+        <label htmlFor="select-checkbox" className="text-xs">
+          <span className="text-gray-300">#Nay139</span>
         </label>
       </div>
 
       <div className="pl-4">
+        {/* Task title and icons */}
         <div className="flex flex-row justify-between items-center">
           <h4 className="font-medium text-sm">{title}</h4>
           <img
             id="search-icon"
-            src={SoundIcon}
+            src="/images/audio.png"
             alt="Filter task Icon"
-            class="w-5 h-5"
+            className="w-5 h-5"
           />
 
           <div className="flex flex-row justify-center gap-1 items-center">
             <img
               id="search-icon"
-              src={messageIconWithNotification}
+              src="/images/textnotification.png"
               alt="Filter task Icon"
-              class="w-6 h-6"
+              className="w-6 h-6"
             />
 
             <img
-              src={profile} // Replace with your image path
+              src="/images/profile.png"
               alt="Profile"
               className="w-6 h-6 rounded-full"
             />
           </div>
         </div>
 
+        {/* Task due date and priority */}
         <div className="flex flex-row justify-start gap-3 items-center mt-1">
-          <div className="flex flex-row justify-start items-center gap-2 ">
+          <div className="flex flex-row justify-start items-center gap-2">
             <img
-              src={calenderIcon} // Replace with your image path
-              alt="Profile"
+              src="/images/calenderIcon.png"
+              alt="Calendar Icon"
               className="w-5 h-5 rounded-full"
             />
             <label className="text-xs">
@@ -78,53 +77,35 @@ const TodoCard = ({ title, status, statusBgColor, statusColor }) => {
             </label>
           </div>
 
-          <div className="flex flex-row justify-start items-center gap-2 ">
+          <div className="flex flex-row justify-start items-center gap-2">
             <img
-              src={redFlagIcon} // Replace with your image path
-              alt="Profile"
+              src="/images/redFlagIcon.png"
+              alt="Red Flag Icon"
               className="w-6 h-6 rounded-full"
             />
             <label className="text-xs text-[#ff4747]">High</label>
           </div>
         </div>
 
+        {/* Task description */}
         <div className="mt-1">
           <p className="text-xs text-gray-500">
             Optimize the user interface for our mobile app .....
           </p>
         </div>
 
-        <div className="flex flex-row justify-between my-2 ">
+        {/* Task status and actions */}
+        <div className="flex flex-row justify-between my-2">
           <div
-            class="bg-[#f5cca1] text-xs rounded-full px-3 py-1 flex flex-row justify-between items-center gap-2"
+            className="bg-[#f5cca1] text-xs rounded-full px-3 py-1 flex flex-row justify-between items-center gap-2"
             style={{ backgroundColor: statusBgColor }}
           >
-            {status === "in-progress" && (
-              <img
-                id="search-icon"
-                src={inProgressIcon}
-                alt="Filter task Icon"
-                class="w-3 h-3"
-              />
-            )}
-            {status === "To do" && (
-              <img
-                id="search-icon"
-                src={todoIcon}
-                alt="Filter task Icon"
-                class="w-3 h-3"
-              />
-            )}
-
-            {status === "Ready for QA" && (
-              <img
-                id="search-icon"
-                src={todoIcon}
-                alt="Filter task Icon"
-                class="w-3 h-3"
-              />
-            )}
-
+            <img
+              id="status-icon"
+              src={getStatusIcon(status)}
+              alt="Status Icon"
+              className="w-3 h-3"
+            />
             <span style={{ color: statusColor }}>{status}</span>
           </div>
 
@@ -133,19 +114,22 @@ const TodoCard = ({ title, status, statusBgColor, statusColor }) => {
           </div>
 
           <div className="flex space-x-2 ml-4">
-            <EyeOutlined style={{ fontSize: "16px", color: "#28A745" }} />{" "}
-            {/* Blue color for Eye icon */}
-            <EditOutlined style={{ fontSize: "16px", color: "#6b57e4" }} />{" "}
-            {/* Green color for Edit icon */}
-            <DeleteOutlined
-              style={{ fontSize: "16px", color: "#DC3545" }}
-            />{" "}
-            {/* Red color for Delete icon */}
+            <EyeOutlined style={{ fontSize: "16px", color: "#28A745" }} />
+            <EditOutlined style={{ fontSize: "16px", color: "#6b57e4" }} />
+            <DeleteOutlined style={{ fontSize: "16px", color: "#DC3545" }} />
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+// PropTypes for type checking
+TodoCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  statusBgColor: PropTypes.string.isRequired,
+  statusColor: PropTypes.string.isRequired,
 };
 
 export default TodoCard;
